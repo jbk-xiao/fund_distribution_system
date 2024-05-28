@@ -10,14 +10,12 @@
     import BackTop from '@/components/BackTop'; // 报错
     import SimpleSalesChannelTable from '@/components/sales_channel/SimpleSalesChannelTable';
 
-// import SimpleSalesChannelTable from '@/components/sales_channel/SimpleSalesChannelTable.vue';
 
     export default {
         components: { 
             SimpleSalesChannelTable,
             BackTop,
         },
-        // SimpleSalesChannelTable,
         data() {
             return {
             name: '',
@@ -53,16 +51,6 @@
                     this.$message.success('请先激活账户！')
                     this.$router.push('/active');
                 }
-                
-
-            },
-            toChangePassword() {
-                this.$router.push({
-                    path: '/personal/changePassword',
-                    // query: {
-                    //   name: this.accountId,
-                    // },
-                });
             },
         },
     };
