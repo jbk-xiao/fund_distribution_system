@@ -97,17 +97,17 @@ const router = new VueRouter({
       children: [
         {
           path: 'baseInformation', // 经理个人信息界面，领导点击指定经理后也跳转至此
-          name: 'BaseInformation',
+          name: 'SalesManagerBaseInformation',
           component: () => import('@/views/sales_manager/BaseInformation.vue'),
         },
         {
           path: 'channelsShow', // 经理查询所负责渠道情况，包含渠道列表和搜索渠道功能
-          name: 'ChannelsShow',
+          name: 'SalesManagerChannelsShow',
           component: () => import('@/views/sales_manager/ChannelsShow.vue'),
         },
         {
           path: 'channelDetail', // 经理查询销售渠道的详情界面，包含渠道基本信息，渠道地图，新增拜访，拜访列表
-          name: 'ChannelDetail',
+          name: 'SalesManagerChannelDetail',
           component: () => import('@/views/sales_manager/ChannelDetail.vue'),
         },
         {
@@ -117,12 +117,12 @@ const router = new VueRouter({
         },
         {
           path: 'visitLogsShow', // 经理查询历史拜访记录，显示历史拜访记录，点击可进入拜访记录详情
-          name: 'VisitLogsShow',
+          name: 'SalesManagerVisitLogsShow',
           component: () => import('@/views/sales_manager/VisitLogsShow.vue'),
         },
         {
           path: 'visitLogDetail', // 经理查询拜访记录详情
-          name: 'VisitLogDetail',
+          name: 'SalesManagerVisitLogDetail',
           component: () => import('@/views/sales_manager/VisitLogDetail.vue'),
         },
         {
@@ -132,7 +132,7 @@ const router = new VueRouter({
         },
         {
           path: 'changePassword',
-          name: 'ChangePassword',
+          name: 'SalesManagerChangePassword',
           component: () => import('@/views/sales_manager/ChangePassword.vue'),
         },
         {
@@ -142,7 +142,7 @@ const router = new VueRouter({
         },
         {
           path: 'rank', // 排行榜参考界面
-          name: 'Rank',
+          name: 'SalesManagerRank',
           component: () => import('@/views/sales_manager/Rank.vue'),
         },
       ],
@@ -156,7 +156,7 @@ const router = new VueRouter({
       children: [
         {
           path: 'baseInformation', // 领导团队信息界面
-          name: 'BaseInformation',
+          name: 'SalesLeaderBaseInformation',
           component: () => import('@/views/sales_leader/BaseInformation.vue'),
         },
         {
@@ -171,32 +171,32 @@ const router = new VueRouter({
         },
         {
           path: 'channelsShow', // 领导查询所负责渠道情况，包含渠道列表和搜索渠道功能
-          name: 'ChannelsShow',
+          name: 'SalesLeaderChannelsShow',
           component: () => import('@/views/sales_leader/ChannelsShow.vue'),
         },
         {
           path: 'channelDetail', // 领导查询销售渠道的详情界面，包含渠道基本信息，渠道地图，新增拜访，拜访列表
-          name: 'ChannelDetail',
+          name: 'SalesLeaderChannelDetail',
           component: () => import('@/views/sales_leader/ChannelDetail.vue'),
         },
         {
           path: 'visitLogsShow', // 领导查询历史拜访记录，显示历史拜访记录，点击可进入拜访记录详情
-          name: 'VisitLogsShow',
+          name: 'SalesLeaderVisitLogsShow',
           component: () => import('@/views/sales_leader/VisitLogsShow.vue'),
         },
         {
           path: 'visitLogDetail', // 领导查询拜访记录详情
-          name: 'VisitLogDetail',
+          name: 'SalesLeaderVisitLogDetail',
           component: () => import('@/views/sales_leader/VisitLogDetail.vue'),
         },
         {
           path: 'rank',
-          name: 'Rank',
+          name: 'SalesLeaderRank',
           component: () => import('@/views/sales_leader/Rank.vue'),
         },
         {
           path: 'changePassword',
-          name: 'ChangePassword',
+          name: 'SalesLeaderChangePassword',
           component: () => import('@/views/sales_leader/ChangePassword.vue'),
         },
       ],
