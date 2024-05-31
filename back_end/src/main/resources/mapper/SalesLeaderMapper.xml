@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myfunds.fds.mapper.SalesLeaderMapper">
+
+	<insert id="insert" parameterType="com.myfunds.fds.entity.SalesLeader">
+		INSERT INTO `salesLeader` (`lid`, `name`, `mail`, `team`)
+		VALUES (#{lid}, #{name}, #{mail}, #{team})
+	</insert>
+
+	<delete id="deleteByLid" parameterType="java.lang.String">
+		DELETE FROM `salesLeader` WHERE `lid` = #{lid}
+	</delete>
+
+	<update id="update" parameterType="com.myfunds.fds.entity.SalesLeader">
+		UPDATE `salesLeader`
+		SET `name` = #{name}, `mail` = #{mail}, `team` = #{team}
+		WHERE `lid` = #{lid}
+	</update>
+
+	<sql id="select_sql">
+		SELECT `lid`, `name`, `mail`, `team` from `salesLeader`
+	</sql>
+
+	<select id="selectByLid" resultType="com.myfunds.fds.entity.SalesLeader">
+		<include refid="select_sql"></include>
+		WHERE `lid` = #{lid}
+	</select>
+
+	<select id="selectAll" resultType="com.myfunds.fds.entity.SalesLeader">
+		<include refid="select_sql"></include>
+	</select>
+
+	<!-- ================================== 查询相关 ================================== -->
+
+	
+	<!-- 通用映射：手动模式 -->
+<!--	<resultMap id="model" type="com.myfunds.fds.entity.AnsRecord">-->
+<!--		<result property="ansId" column="ansId" />-->
+<!--		<result property="queId" column="queId" />-->
+<!--		<result property="userId" column="userId" />-->
+<!--		<result property="ans" column="ans" />-->
+<!--		<result property="isCorrect" column="isCorrect" />-->
+<!--		<result property="time" column="time" />-->
+<!--	</resultMap>-->
+<!--	-->
+<!--	&lt;!&ndash; 公共查询sql片段 &ndash;&gt;-->
+<!--	<sql id="select_sql">-->
+<!--		select concat('a', `ansId`) `ansId`, concat('q', `queId`) `queId`, `userId`, `ans`, `isCorrect`, `time`-->
+<!--		from `ansRecord` -->
+<!--	</sql>-->
+<!--	-->
+<!--	&lt;!&ndash; 查 - 根据id &ndash;&gt;-->
+<!--	<select id="getById" resultMap="model">-->
+<!--		<include refid="select_sql"></include>-->
+<!--		where `ansId` = right(#{ansId}, length(#{ansId}) - 1)-->
+<!--	</select>-->
+<!--	-->
+<!--	&lt;!&ndash; 查集合 - 根据条件（参数为空时代表忽略指定条件） [G] &ndash;&gt;-->
+<!--	<select id="getList" resultMap="model">-->
+<!--		<include refid="select_sql"></include>-->
+<!--		<where>-->
+<!--			<if test=' this.has("ansId") '> and `ansId` = right(#{ansId}, length(#{ansId}) - 1) </if>-->
+<!--			<if test=' this.has("queId") '> and `queId` = right(#{queId}, length(#{queId}) - 1) </if>-->
+<!--			<if test=' this.has("userId") '> and `userId` = #{userId} </if>-->
+<!--			<if test=' this.has("ans") '> and `ans` = #{ans} </if>-->
+<!--			<if test=' this.has("isCorrect") '> and `isCorrect` = #{isCorrect} </if>-->
+<!--			<if test=' this.has("time") '> and `time` = #{time} </if>-->
+<!--		</where>-->
+<!--		order by-->
+<!--		<choose>-->
+<!--			<when test='sortType == 1'> `ansId` desc </when>-->
+<!--			<when test='sortType == 2'> `queId` desc </when>-->
+<!--			<when test='sortType == 3'> `userId` desc </when>-->
+<!--			<when test='sortType == 4'> `ans` desc </when>-->
+<!--			<when test='sortType == 5'> `isCorrect` desc </when>-->
+<!--			<when test='sortType == 6'> `ansId` desc </when>-->
+<!--			<otherwise> `time` desc </otherwise>-->
+<!--		</choose>-->
+<!--	</select>-->
+<!--	-->
+<!--	&lt;!&ndash; 查 - 根据queId &ndash;&gt;-->
+<!--	<select id="getByQueId" resultMap="model">-->
+<!--		<include refid="select_sql"></include>-->
+<!--		where `queId` = right(#{queId}, length(#{queId}) - 1)-->
+<!--	</select>-->
+</mapper>
