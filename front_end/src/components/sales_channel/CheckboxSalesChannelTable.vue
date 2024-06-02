@@ -3,7 +3,7 @@
     <div class="section">
         <el-table :data="channel_list.filter(
             data =>
-                !search || data.channel.toLowerCase().includes(search.toLowerCase())
+                !search || data.name.toLowerCase().includes(search.toLowerCase())
                 || data.address.toLowerCase().includes(search.toLowerCase())
         )" border
             ref="multipleTable"
@@ -13,7 +13,7 @@
             max-height="500">
             <el-table-column fixed type="selection" width="55">
             </el-table-column>
-            <el-table-column fixed prop="channel" label="渠道名称" width="150">
+            <el-table-column fixed prop="name" label="渠道名称" width="150">
             </el-table-column>
             <el-table-column prop="organization" label="所属机构" width="150">
             </el-table-column>
@@ -25,12 +25,9 @@
             </el-table-column>
             <el-table-column prop="zip" label="邮编" width="120">
             </el-table-column>
-            <el-table-column prop="start_time" label="开始营业时间" width="150">
+            <el-table-column prop="openHours" label="营业时间" width="150">
             </el-table-column>
-            <el-table-column prop="end_time" label="结束营业时间" width="150">
-            </el-table-column>
-            <el-table-column prop="manager_name" label="负责人" width="150">
-            </el-table-column>
+
             <el-table-column fixed="right" align="right" width="250">
                 <template slot="header" slot-scope="{}">
                     <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
@@ -49,18 +46,18 @@ export default {
     data() {
         return {
             channel_list: [
-                {
-                    channel: '00天河支行',
-                    organization: "中国建设银行",
-                    province: "广东省",
-                    city: "广州市天河区",
-                    address: "广东省广州市天河区体育西路建行天河支行",
-                    zip: 510000,
-                    start_time: "09:00",
-                    end_time: "17:00",
-                    manager_name: "张三",
-                    phone_number: "020-81179529",
-                }
+                // {
+                //     channel: '00天河支行',
+                //     organization: "中国建设银行",
+                //     province: "广东省",
+                //     city: "广州市天河区",
+                //     address: "广东省广州市天河区体育西路建行天河支行",
+                //     zip: 510000,
+                //     start_time: "09:00",
+                //     end_time: "17:00",
+                //     manager_name: "张三",
+                //     phoneNumber: "020-81179529",
+                // }
             ],
             search: ''
         }
@@ -72,34 +69,7 @@ export default {
         indexMethod(index) {
             return index + 1;
         },
-        async getData() {
-            // let userId = window.sessionStorage.getItem('userId');
-            let { data: res } = await this.$http.get("communityUser/ansRecords")
-            console.log('ansRecords', res.data)
-            for (var i = 0; i < res.data.length; i++) {
-                let { data } = await this.$http.get("communityWhole/question/" + res.data[i].queId)
-                console.log(data)
-                this.channel_list.push({
-                    index: i + 1,
-                    problem: data.data.problem,
-                    stdAns: data.data.stdAns,
-                    analysis: data.data.analysis,
-                    ans: res.data[i].ans,
-                    channel: '建行天河支行',
-                    organization: "中国建设银行",
-                    province: "广东省",
-                    city: "广州市天河区",
-                    address: "广东省广州市天河区建行天河支行",
-                    zip: 510000,
-                    start_time: "09:00",
-                    end_time: "17:00",
-                    manager_name: "张三"
-                    // isCorrect: res.data[i].isCorrect,
-                })
-            }
-            console.log('渠道列表汇总', this.channel_list)
-            // window.localStorage.setItem('userBasic', res.data);
-        },
+
         showChannelDetail(channel_data) {
             console.log('channel_data: ', channel_data);
             console.log('channel_data.channel: ', channel_data.channel);
@@ -113,7 +83,7 @@ export default {
         }
     },
     mounted() {
-        this.getData();
+        // this.getData();
     }
 
 }

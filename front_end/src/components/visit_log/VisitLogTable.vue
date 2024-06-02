@@ -12,12 +12,12 @@
             </el-table-column>
             <el-table-column prop="organization" label="所属机构" width="150">
             </el-table-column>
-            <el-table-column prop="visit_date" label="拜访日期" width="120">
+            <el-table-column prop="date" label="拜访日期" width="120">
             </el-table-column>
-            <el-table-column prop="abstract" label="拜访摘要" width="240">
+            <el-table-column prop="logAbstract" label="拜访摘要" width="240">
             </el-table-column>
             
-            <el-table-column prop="manager_name" label="负责人" width="150">
+            <el-table-column prop="manager" label="负责人" width="150">
             </el-table-column>
             <el-table-column fixed="right" align="right" width="250">
                 <template slot="header" slot-scope="{}">
@@ -37,13 +37,13 @@ export default {
     data() {
         return {
             visit_log_list: [
-                {
-                    channel: '00天河支行',
-                    organization: "中国建设银行",
-                    visit_date: "2024-05-26",
-                    abstract: "这是一条不一样的拜访摘要。这是一条拜访摘要。这是一条拜访摘要。这是一条拜访摘要。",
-                    manager_name: "张三",
-                }
+                // {
+                //     channel: '00天河支行',
+                //     organization: "中国建设银行",
+                //     visit_date: "2024-05-26",
+                //     abstract: "这是一条不一样的拜访摘要。这是一条拜访摘要。这是一条拜访摘要。这是一条拜访摘要。",
+                //     manager_name: "张三",
+                // }
             ],
             search: '',
             roleId: '',
@@ -56,33 +56,33 @@ export default {
         indexMethod(index) {
             return index + 1;
         },
-        async getData() {
-            // let userId = window.sessionStorage.getItem('userId');
+        // async getData() {
+        //     // let userId = window.sessionStorage.getItem('userId');
+        //     console.log('ansRecords', res.data)
+        //     let { data: res } = await this.$http.get("communityUser/ansRecords")
+        //     for (var i = 0; i < res.data.length; i++) {
+        //         let { data } = await this.$http.get("communityWhole/question/" + res.data[i].queId)
+        //         console.log(data)
+        //         this.visit_log_list.push({
+        //             index: i + 1,
+        //             problem: data.data.problem,
+        //             stdAns: data.data.stdAns,
+        //             analysis: data.data.analysis,
+        //             ans: res.data[i].ans,
+        //             channel: '建行天河支行',
+        //             organization: "中国建设银行",
+        //             visit_date: "2024-05-26",
+        //             abstract: "这是一条查出来的拜访摘要。这是一条拜访摘要。这是一条拜访摘要。这是一条拜访摘要。",
+        //             manager_name: "张三",
+        //             // isCorrect: res.data[i].isCorrect,
+        //         })
+        //     }
+        //     console.log('拜访记录列表汇总', this.visit_log_list)
+        //     // window.localStorage.setItem('userBasic', res.data);
+        // },
+        showVisitLogDetail(visit_log_data) {
             var roleId = window.sessionStorage.getItem('roleId');
             this.isManager = (roleId == 2);
-            let { data: res } = await this.$http.get("communityUser/ansRecords")
-            console.log('ansRecords', res.data)
-            for (var i = 0; i < res.data.length; i++) {
-                let { data } = await this.$http.get("communityWhole/question/" + res.data[i].queId)
-                console.log(data)
-                this.visit_log_list.push({
-                    index: i + 1,
-                    problem: data.data.problem,
-                    stdAns: data.data.stdAns,
-                    analysis: data.data.analysis,
-                    ans: res.data[i].ans,
-                    channel: '建行天河支行',
-                    organization: "中国建设银行",
-                    visit_date: "2024-05-26",
-                    abstract: "这是一条查出来的拜访摘要。这是一条拜访摘要。这是一条拜访摘要。这是一条拜访摘要。",
-                    manager_name: "张三",
-                    // isCorrect: res.data[i].isCorrect,
-                })
-            }
-            console.log('拜访记录列表汇总', this.visit_log_list)
-            // window.localStorage.setItem('userBasic', res.data);
-        },
-        showVisitLogDetail(visit_log_data) {
             if (this.isManager) {
                 this.$router.push({
                     path: '/sales_manager/visitLogDetail',
@@ -97,7 +97,7 @@ export default {
         }
     },
     mounted() {
-        this.getData();
+        // this.getData();
     }
 
 }

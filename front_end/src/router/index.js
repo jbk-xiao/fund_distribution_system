@@ -135,16 +135,16 @@ const router = new VueRouter({
           name: 'SalesManagerChangePassword',
           component: () => import('@/views/sales_manager/ChangePassword.vue'),
         },
-        {
-          path: 'integral', // 统计信息参考界面
-          name: 'Integral',
-          component: () => import('@/views/sales_manager/Integral.vue'),
-        },
-        {
-          path: 'rank', // 排行榜参考界面
-          name: 'SalesManagerRank',
-          component: () => import('@/views/sales_manager/Rank.vue'),
-        },
+        // {
+        //   path: 'integral', // 统计信息参考界面
+        //   name: 'Integral',
+        //   component: () => import('@/views/sales_manager/Integral.vue'),
+        // },
+        // {
+        //   path: 'rank', // 排行榜参考界面
+        //   name: 'SalesManagerRank',
+        //   component: () => import('@/views/sales_manager/Rank.vue'),
+        // },
       ],
     },
     {
@@ -189,11 +189,11 @@ const router = new VueRouter({
           name: 'SalesLeaderVisitLogDetail',
           component: () => import('@/views/sales_leader/VisitLogDetail.vue'),
         },
-        {
-          path: 'rank',
-          name: 'SalesLeaderRank',
-          component: () => import('@/views/sales_leader/Rank.vue'),
-        },
+        // {
+        //   path: 'rank',
+        //   name: 'SalesLeaderRank',
+        //   component: () => import('@/views/sales_leader/Rank.vue'),
+        // },
         {
           path: 'changePassword',
           name: 'SalesLeaderChangePassword',

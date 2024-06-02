@@ -1,15 +1,4 @@
 <template>
-  <!-- <el-card class="box-card"> -->
-    <!-- <div slot="header" class="clearfix">
-      <el-row style="width:100%">
-        <el-col :span="4" :offset="4"><img style="width:60px" src="@/../public/images/女人-女性头像.png" alt=""></el-col>
-        <el-col :span="4" :offset="2">
-          <el-row style="font-size:20px">
-            <el-col>{{ form.userId }}</el-col>
-          </el-row>
-        </el-col>
-      </el-row>
-    </div> -->
     <div class="inf">
       <el-row>
         <span style="display:inline-block;width:80px">姓名：</span>
@@ -17,22 +6,30 @@
       </el-row>
       <el-row>
         <span style="display:inline-block;width:80px">员工号：</span>
-        <el-input class="my-input-box" v-model="userId" disabled></el-input>
+        <el-input class="my-input-box" v-model="mid" disabled></el-input>
         <!-- <span>{{ id }}</span> -->
-      </el-row>
-      <el-row>
-        <span style="display:inline-block;width:80px">部门：</span>
-        <el-input class="my-input-box" v-model="org" disabled></el-input>
       </el-row>
       <el-row>
         <span style="display:inline-block;width:80px">邮箱：</span>
         <el-input class="my-input-box" v-model="mail" disabled></el-input>
       </el-row>
       <el-row>
-        <span style="display:inline-block;width:80px">拜访次数：</span>
-        <el-input class="my-input-box" v-model="score" disabled></el-input>
+        <span style="display:inline-block;width:80px">部门：</span>
+        <el-input class="my-input-box" v-model="team" disabled></el-input>
       </el-row>
       <el-row>
+        <span style="display:inline-block;width:80px">部门领导：</span>
+        <el-input class="my-input-box" v-model="leader" disabled></el-input>
+      </el-row>
+      <el-row>
+        <span style="display:inline-block;width:80px">负责渠道数：</span>
+        <el-input class="my-input-box" v-model="channel_num" disabled></el-input>
+      </el-row>
+      <el-row>
+        <span style="display:inline-block;width:80px">拜访次数：</span>
+        <el-input class="my-input-box" v-model="visit_num" disabled></el-input>
+      </el-row>
+      <!-- <el-row>
         <el-col :span="6" :offset="16">
           <span
             style="cursor:pointer;text-decoration:underline"
@@ -40,7 +37,7 @@
             >修改密码</span
           >
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
   <!-- </el-card> -->
 </template>
@@ -49,11 +46,14 @@
 export default {
   data() {
     return {
-      name: '',
-      userId: '',
-      mail: '',
-      org: '',
-      score: ''
+      mid: "",
+      name: "",
+      mail: "",
+      lid: "",
+      team: "",
+      leader: "",
+      channel_num: 0,
+      visit_num: 0,
     };
   },
   mounted() {
@@ -63,7 +63,7 @@ export default {
     async getData () {
       let userId = window.sessionStorage.getItem('userId');
       // let {data:res} = await this.$http.get("communityUser/userInfo/" + userId)
-      let res = await this.$http.get("communityUser/userInfo/" + userId)
+      let res = await this.$http.get("salesManager/baseInformation/" + userId)
       .catch(function (error) {
         console.log('出错',error.response);//可以拿到后端返回的信息
         // if(error.response.status == 500)
@@ -71,11 +71,15 @@ export default {
       });
       console.log('用户信息',res)
       if(res.data.code == 200) {
+        this.mid = res.data.data.mid;
         this.name = res.data.data.name;
-        this.userId = res.data.data.userId;
         this.mail = res.data.data.mail;
-        this.org = res.data.data.org;
-        this.score = res.data.data.score;
+        this.lid = res.data.data.lid;
+        this.team = res.data.data.team;
+        this.leader = res.data.data.leader;
+        this.channel_num = res.data.data.channelNum;
+        this.visit_num = res.data.data.visitNum;
+        window.sessionStorage.setItem("lid", this.lid);
       }
       if(res.data.code == 500) {
         this.$message.success('请先激活账户！')

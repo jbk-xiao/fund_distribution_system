@@ -1,15 +1,4 @@
 <template>
-  <!-- <el-card class="box-card"> -->
-    <!-- <div slot="header" class="clearfix">
-      <el-row style="width:100%">
-        <el-col :span="4" :offset="4"><img style="width:60px" src="@/../public/images/女人-女性头像.png" alt=""></el-col>
-        <el-col :span="4" :offset="2">
-          <el-row style="font-size:20px">
-            <el-col>{{ form.userId }}</el-col>
-          </el-row>
-        </el-col>
-      </el-row>
-    </div> -->
     <div class="inf">
       <el-row>
         <span style="display:inline-block;width:80px">姓名：</span>
@@ -17,22 +6,22 @@
       </el-row>
       <el-row>
         <span style="display:inline-block;width:80px">员工号：</span>
-        <el-input class="my-input-box" v-model="userId" disabled></el-input>
+        <el-input class="my-input-box" v-model="lid" disabled></el-input>
         <!-- <span>{{ id }}</span> -->
       </el-row>
       <el-row>
         <span style="display:inline-block;width:80px">部门：</span>
-        <el-input class="my-input-box" v-model="org" disabled></el-input>
+        <el-input class="my-input-box" v-model="team" disabled></el-input>
       </el-row>
       <el-row>
         <span style="display:inline-block;width:80px">邮箱：</span>
         <el-input class="my-input-box" v-model="mail" disabled></el-input>
       </el-row>
-      <el-row>
+      <!-- <el-row>
         <span style="display:inline-block;width:80px">拜访次数：</span>
         <el-input class="my-input-box" v-model="score" disabled></el-input>
-      </el-row>
-      <el-row>
+      </el-row> -->
+      <!-- <el-row>
         <el-col :span="6" :offset="16">
           <span
             style="cursor:pointer;text-decoration:underline"
@@ -40,7 +29,7 @@
             >修改密码</span
           >
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
   <!-- </el-card> -->
 </template>
@@ -50,10 +39,9 @@ export default {
   data() {
     return {
       name: '',
-      userId: '',
+      lid: '',
       mail: '',
-      org: '',
-      score: ''
+      team: ''
     };
   },
   mounted() {
@@ -62,19 +50,19 @@ export default {
   methods: {
     async getData () {
       let userId = window.sessionStorage.getItem('userId');
-      let {data:res} = await this.$http.get("communityUser/userInfo/" + userId)
+      let {data:res} = await this.$http.get("salesLeader/baseInformation/" + userId)
       console.log('用户信息',res.data)
       this.name = res.data.name;
-      this.userId = res.data.userId;
+      this.lid = res.data.lid;
       this.mail = res.data.mail;
-      this.org = res.data.org;
-      this.score = res.data.score;
-      window.sessionStorage.setItem('comments', res.data.comments);
-      window.sessionStorage.setItem('notes', res.data.notes);
+      this.team = res.data.team;
+      // this.score = res.data.score;
+      // window.sessionStorage.setItem('comments', res.data.comments);
+      // window.sessionStorage.setItem('notes', res.data.notes);
     },
     toChangePassword() {
       this.$router.push({
-        path: '/personal/changePassword',
+        path: '/sales_leader/changePassword',
         // query: {
         //   name: this.accountId,
         // },

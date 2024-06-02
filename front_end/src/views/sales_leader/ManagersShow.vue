@@ -8,13 +8,17 @@
             </el-table-column>
             <el-table-column fixed prop="name" label="姓名" width="150px">
             </el-table-column>
-            <el-table-column prop="id" label="Id" width="130px">
+            <el-table-column prop="mid" label="员工号" width="130px">
             </el-table-column>
-            <el-table-column prop="org" label="组织">
-            </el-table-column>
-            <el-table-column prop="roleName" label="身份">
-            </el-table-column>
+            <!-- <el-table-column prop="roleName" label="身份">
+            </el-table-column> -->
             <el-table-column prop="mail" label="邮箱">
+            </el-table-column>
+            <el-table-column prop="team" label="团队">
+            </el-table-column>
+            <el-table-column prop="channelNum" label="负责渠道数量">
+            </el-table-column>
+            <el-table-column prop="visitNum" sortable label="拜访数量">
             </el-table-column>
             <!-- <el-table-column
             prop="note"
@@ -45,47 +49,56 @@ export default {
     data() {
         return {
             tableData: [],
-            tableData2: [{
-                student: '18379999',
-                name: '王小虎',
-                gender: '男',
-                association: '193',
-                note: '53',
-                comment: '27',
-                question: '14'
-            }, {
-                student: '18379999',
-                name: '王小虎',
-                gender: '男',
-                association: '193',
-                note: '53',
-                comment: '27',
-                question: '14'
-            }, {
-                student: '18379999',
-                name: '王小虎',
-                gender: '男',
-                association: '193',
-                note: '53',
-                comment: '27',
-                question: '14'
-            }, {
-                student: '18379999',
-                name: '王小虎',
-                gender: '男',
-                association: '193',
-                note: '53',
-                comment: '27',
-                question: '14'
-            }],
+            // tableData2: [{
+            //     student: '18379999',
+            //     name: '王小虎',
+            //     gender: '男',
+            //     association: '193',
+            //     note: '53',
+            //     comment: '27',
+            //     question: '14'
+            // }, {
+            //     student: '18379999',
+            //     name: '王小虎',
+            //     gender: '男',
+            //     association: '193',
+            //     note: '53',
+            //     comment: '27',
+            //     question: '14'
+            // }, {
+            //     student: '18379999',
+            //     name: '王小虎',
+            //     gender: '男',
+            //     association: '193',
+            //     note: '53',
+            //     comment: '27',
+            //     question: '14'
+            // }, {
+            //     student: '18379999',
+            //     name: '王小虎',
+            //     gender: '男',
+            //     association: '193',
+            //     note: '53',
+            //     comment: '27',
+            //     question: '14'
+            // }],
             search: '',
         }
     },
     methods: {
         async getData() {
-            let res = await this.$http.get("managerOperation/xUsers");
-            console.log(res.data.data)
-            this.tableData = res.data.data;
+            let userId = window.sessionStorage.getItem('userId');
+            let res = await this.$http.get("salesLeader/managerList/" + userId);
+
+            console.log("manager_list", res.data.data)
+            if(res.data.code == 200) {
+                this.tableData = res.data.data;
+                
+            }
+            if(res.data.code == 403) {
+                this.$message.error('没有权限！')
+                // this.$router.push('/active');
+            }
         },
         showManagerDetail(manager_data) {
             this.$router.push({

@@ -5,7 +5,7 @@
 
         <div class="inf">
             <el-row>
-                <VisitLogTable></VisitLogTable>
+                <VisitLogTable ref="visit_log_table"></VisitLogTable>
             </el-row>
         </div>
     </div>
@@ -39,35 +39,24 @@ export default {
         };
     },
     mounted() {
-        // this.getData();
-        this.channel_data = this.$route.query;
-        console.log(this.channel_data);
-
+        this.getData();
     },
     methods: {
-        async getData() {
+        async getData () {
             let userId = window.sessionStorage.getItem('userId');
-            // let {data:res} = await this.$http.get("communityUser/userInfo/" + userId)
-            let res = await this.$http.get("communityUser/userInfo/" + userId)
-                .catch(function (error) {
-                    console.log('出错', error.response);//可以拿到后端返回的信息
-                    // if(error.response.status == 500)
-                    //   this.$router.push('active')
-                });
-            console.log('用户信息', res)
-            if (res.data.code == 200) {
-                this.name = res.data.data.name;
-                this.userId = res.data.data.userId;
-                this.mail = res.data.data.mail;
-                this.org = res.data.data.org;
-                this.score = res.data.data.score;
+            let res = await this.$http.get("salesManager/managerVisitLogList/" + userId)
+            .catch(function (error) {
+                console.log('出错',error.response);//可以拿到后端返回的信息
+                
+            });
+            console.log('用户信息',res)
+            if(res.data.code == 200) {
+                this.$refs.visit_log_table.visit_log_list = res.data.data;
             }
-            if (res.data.code == 500) {
-                this.$message.success('请先激活账户！')
-                this.$router.push('/active');
+            if(res.data.code == 403) {
+                this.$message.error('没有权限！')
+                // this.$router.push('/active');
             }
-
-
         },
     },
 };

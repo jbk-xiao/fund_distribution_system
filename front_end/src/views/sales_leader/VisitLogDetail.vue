@@ -16,11 +16,22 @@
             </el-row>
             <el-row>
                 <span style="display:inline-block;width:80px">拜访日期：</span>
-                <el-input class="my-input-box" v-model="visit_log_data.visit_date" readonly style="width: 120px;"></el-input>
+                <el-input class="my-input-box" v-model="visit_log_data.date" readonly style="width: 120px;"></el-input>
 
                 <span style="display:inline-block;width:10px"></span>
                 <span style="display:inline-block;width:80px">负责经理：</span>
-                <el-input class="my-input-box" v-model="visit_log_data.manager_name" readonly style="width: 70px;"></el-input>
+                <el-input class="my-input-box" v-model="visit_log_data.manager" readonly style="width: 70px;"></el-input>
+            </el-row>
+            <el-row>
+                <span style="display:inline-block;width:80px">拜访摘要：</span>
+            </el-row>
+            <el-row>
+                <el-input
+                    type="textarea"
+                    :autosize="{ minRows: 2, maxRows: 6}"
+                    v-model="visit_log_data.detail"
+                    readonly>
+                </el-input>
             </el-row>
             <el-row>
                 <span style="display:inline-block;width:80px">详细记录：</span>

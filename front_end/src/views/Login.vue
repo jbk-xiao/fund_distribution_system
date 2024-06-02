@@ -23,16 +23,16 @@
         </el-form-item>
           
           <span class="form_btns">
-            <router-link to="register" style="font-size: 14px;">
-              / 管理员注册
+            <router-link to="" style="font-size: 14px;">
+              <!-- / 管理员注册 -->
             </router-link>
-            <router-link to="forgetPassword" style="margin-left: 5px; font-size: 14px;">
-            / 忘记密码
+            <router-link to="" style="margin-left: 5px; font-size: 14px;">
+            <!-- / 忘记密码 --> 
             </router-link>
           </span>
 
         <!-- 按钮 -->
-        <el-form-item class="form_btns_2">
+        <el-form-item class="form_btns_2" style="margin-top: 30px;">
           <el-button type="primary" @click="btnLogin">登录</el-button>
           <el-button type="info" @click="btnReset">清除</el-button>
           <!-- <span>
@@ -94,7 +94,9 @@ export default {
           "xUser/doLogin?" + "key=" + userForm.key + "&password=" + userForm.password
         );
         console.log("loginTest",res);
+        console.log("loginTest code",res.code);
       if(res.code == 200) {
+        console.log("in!!!")
         window.sessionStorage.setItem("token", res.data.tokenInfo.tokenValue);
         window.sessionStorage.setItem("roleId", res.data.xUser.roleId);
         window.sessionStorage.setItem("userId", res.data.xUser.id);
@@ -103,12 +105,15 @@ export default {
         if(!window.sessionStorage.getItem('token'))
             this.$router.push('login');
         var roleId = window.sessionStorage.getItem('roleId');
+        console.log("roleId", roleId)
         if(roleId == 1) { 
             // 销售领导
+            console.log("push leader")
             this.$router.push('sales_leader')
         }
         if(roleId == 2) { 
             // 销售经理
+            console.log("push manager")
             this.$router.push('sales_manager')
         }
         return this.$message({

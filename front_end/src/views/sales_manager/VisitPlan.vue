@@ -7,6 +7,9 @@
                 开始规划
             </el-button>
         </el-row>
+        <el-row style="margin-top:20px">
+            <bmap ref="map"></bmap>
+        </el-row>
     </div>
     
 </template>
@@ -14,11 +17,13 @@
 <script>
     import BackTop from '@/components/BackTop'; // 报错
     import CheckboxSalesChannelTable from '@/components/sales_channel/CheckboxSalesChannelTable.vue';
+    import Bmap from '@/components/index/Bmap.vue';
 
     export default {
         components: { 
             CheckboxSalesChannelTable,
-            BackTop
+            BackTop,
+            Bmap,
         },
         // SimpleSalesChannelTable,
         data() {
@@ -37,7 +42,7 @@
             async getData () {
                 let userId = window.sessionStorage.getItem('userId');
                 // let {data:res} = await this.$http.get("communityUser/userInfo/" + userId)
-                let res = await this.$http.get("communityUser/userInfo/" + userId)
+                let res = await this.$http.get("salesManager/channelList/" + userId)
                 .catch(function (error) {
                     console.log('出错',error.response);//可以拿到后端返回的信息
                     // if(error.response.status == 500)
@@ -45,18 +50,12 @@
                 });
                 console.log('用户信息',res)
                 if(res.data.code == 200) {
-                    this.name = res.data.data.name;
-                    this.userId = res.data.data.userId;
-                    this.mail = res.data.data.mail;
-                    this.org = res.data.data.org;
-                    this.score = res.data.data.score;
+                    this.$refs.checkboxRows.channel_list = res.data.data;
                 }
-                if(res.data.code == 500) {
-                    this.$message.success('请先激活账户！')
-                    this.$router.push('/active');
+                if(res.data.code == 403) {
+                    this.$message.error('没有权限！')
+                    // this.$router.push('/active');
                 }
-                
-
             },
             toChangePassword() {
                 this.$router.push({
@@ -74,6 +73,29 @@
                     this.$message.error('最多选择10个销售渠道！');
                 } else {
                     this.$message.info('开始规划行程……')
+                    var lng = this.multipleSelection[0].longitude;
+                    var lat = this.multipleSelection[0].latitude;
+
+                    // geo = [{
+                    //     "lng": lng,
+                    //     "lat": lat,
+                    //     "name": this.channel_data.name,
+                    //     "value": 100
+                    // }]
+                    var geo = []
+                    for (var i = 0; i < this.multipleSelection.length; i++) {
+                
+                        geo.push({
+                            name: this.multipleSelection[i].name,
+                            value: [this.multipleSelection[i].longitude, this.multipleSelection[i].latitude],
+                        })
+
+                    }
+
+                    setTimeout(() => {
+                        this.$refs.map.graph(geo, [], [], [], [], [lng, lat], 10);
+                        this.$refs.loading = false;
+                    }, 1000);
                 }
             },
         },

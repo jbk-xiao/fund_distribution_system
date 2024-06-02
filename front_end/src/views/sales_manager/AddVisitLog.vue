@@ -21,17 +21,15 @@
         <el-form-item style="margin-top:30px;margin-left:50px" label="负责经理：">
           <el-input
             style="width:500px"
-            v-model="visit_log_form.manager_name"
+            v-model="visit_log_form.manager"
             disabled
           ></el-input>
         </el-form-item>
         <el-form-item style="margin-top:30px;margin-left:50px" label="拜访日期：">
             <el-date-picker
                 v-model="visit_log_form.date"
-                type="daterange"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                :default-time="['00:00:00', '23:59:59']"
+                type="date"
+                placeholder="选择日期"
                 format="yyyy 年 MM 月 dd 日"
                 value-format="yyyy-MM-dd">
             </el-date-picker>
@@ -40,7 +38,7 @@
             <el-input
                 type="textarea"
                 :autosize="{ minRows: 2, maxRows: 6}"
-                v-model="visit_log_form.abstract"
+                v-model="visit_log_form.logAbstract"
                 placeholder="简要描述拜访过程，建议200字以内。">
             </el-input>
         </el-form-item>
@@ -64,19 +62,30 @@
   export default {
     data() {
       return {
+        visit_log_data: {
+          channel: 'channel name',
+          organization: 'org',
+          manager: 'manager_name',
+          date: '',
+          logAbstract: '',
+          detail: '',
+        },
         visit_log_form: {
           channel: 'channel name',
           organization: 'org',
-          manager_name: 'manager_name',
+          manager: 'manager_name',
           date: '',
-          abstract: '',
+          logAbstract: '',
           detail: '',
         },
       };
     },
     mounted () {
-      this.visit_log_form = this.$route.query;
-      console.log('来自query的参数', this.visit_log_form);
+      this.visit_log_data = this.$route.query;
+      console.log('来自query的参数', this.visit_log_data);
+      this.visit_log_form.channel = this.visit_log_data.channel;
+      this.visit_log_form.organization = this.visit_log_data.organization;
+      this.visit_log_form.manager = this.visit_log_data.manager;
     },
     methods: {
       cancel () {
@@ -84,30 +93,24 @@
       },
       async submitVisitLog() {
         console.log('拜访记录表单内容：', this.visit_log_form)
-        // if (
-        //   this.form.password.length != 0 && 
-        //   this.form.newPassword.length != 0 &&
-        //   this.form.newPassword === this.form.rePassword
-        // ) {
-        //   //发送确认旧密码准确，然后设置成新密码
-        //   let res = await this.$http.put('userOperation/password?newPw=' + this.form.newPassword + "&oldPw=" + this.form.password)
-        //   console.log('改密码',res.data);
-        //   if(res.data.code == 200) {
-        //     window.sessionStorage.clear();
-        //     this.$router.push('/login');
-        //     return this.$message.success('密码修改成功！请重新登录。')
-        //   }
-  
-        // } else if(this.form.newPassword != this.form.rePassword) {
-        //   this.form.newPassword = '';
-        //   this.form.rePassword = '';
-        //   this.$message({
-        //     type: 'error',
-        //     message: '两次密码不一致！',
-        //   });
-        // } else {
-        //   this.$message.error('修改失败！')
-        // }
+        this.visit_log_data.date = this.visit_log_form.date;
+        this.visit_log_data.logAbstract = this.visit_log_form.logAbstract;
+        this.visit_log_data.detail = this.visit_log_form.detail;
+
+        console.log("before post", this.visit_log_data);
+        let res = await this.$http.post("salesManager/visitLog", this.visit_log_data);
+        console.log("after post", res);
+        
+        if (res.data.code == 200) {
+          if (res.data.data == "1") {
+            this.$message.success("添加成功！");
+            this.$router.back();
+          } else {
+            this.$message.error("添加失败！");
+          }
+        } else {
+          this.$message.error("添加失败！");
+        }
       },
     },
   };
