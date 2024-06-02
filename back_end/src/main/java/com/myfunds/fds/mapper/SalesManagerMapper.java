@@ -4,6 +4,7 @@ import com.myfunds.fds.entity.SalesManager;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +22,8 @@ public interface SalesManagerMapper {
             " FROM `salesManager`" +
             " WHERE `lid` = #{lid};")
     List<SalesManager> selectByLid(@Param("lid") String lid);
+
+    @Update("UPDATE `salesManager` SET `visitNum` = `visitNum` + 1" +
+            " WHERE `mid` = #{mid}")
+    int addVisitNum(@Param("mid") String mid);
 }

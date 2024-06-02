@@ -44,7 +44,7 @@ public class VisitLog {
     private String manager;
     private String lid;
     private String date;
-    @SerializedName("abstract")
+//    @SerializedName("abstract")
     private String logAbstract;
     private String detail;
 }

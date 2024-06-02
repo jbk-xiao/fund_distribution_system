@@ -1,0 +1,28 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.myfunds.fds.grpc;
+
+message LidInformationRequest {
+  string lid = 1;
+}
+
+message LidInformationResponse {
+  string lidInfo = 1;
+}
+
+message LeaderCidInformationRequest {
+  string cid = 1;
+  string lid = 2;
+}
+
+message LeaderCidInformationResponse {
+  string cidInfo = 1;
+}
+
+service SalesLeaderService {
+  rpc getBaseInformation(LidInformationRequest) returns (LidInformationResponse);
+  rpc getManagerList(LidInformationRequest) returns (LidInformationResponse);
+  rpc getTeamChannelList(LidInformationRequest) returns (LidInformationResponse);
+  rpc getTeamVisitLogList(LidInformationRequest) returns (LidInformationResponse);
+  rpc getChannelVisitLogList(LeaderCidInformationRequest) returns (LeaderCidInformationResponse);
+}

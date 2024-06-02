@@ -1,0 +1,43 @@
+# 开发环境配置文件
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /MyActuator
+  server:
+    port: 12583
+    address: 127.0.0.1
+  health:
+    redis:
+      enabled: false
+
+spring:
+  datasource:
+    username: root
+    password: toor
+    url: jdbc:mysql://localhost:3306/fund_distribution_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  application:
+    name: hello-grpc-server
+
+# grpc端口号
+grpc:
+  port: 8289
+
+server:
+  port: 8290
+
+mybatis:
+  # 指定映射文件的位置
+  mapper-locations: classpath:mapper/*.xml, classpath:mapper/satoken/*.xml
+  type-aliases-package: com.myfunds.fds.entity, com.myfunds.fds.entity.satoken
+
+app-config:
+  grpc-server-name: localhost
+  grpc-server-port: 8289
+  max-message-size: 1073741824

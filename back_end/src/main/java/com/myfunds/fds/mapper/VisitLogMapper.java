@@ -1,6 +1,5 @@
 package com.myfunds.fds.mapper;
 
-import com.myfunds.fds.entity.SalesChannel;
 import com.myfunds.fds.entity.VisitLog;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -17,19 +16,33 @@ public interface VisitLogMapper {
             " #{logAbstract}, #{detail});")
     int insert(VisitLog visitLog);
 
-    @Select("SELECT CONCAT('v', `vid`) `vid`, `cid`, `channel`, `organization`, `mid`, `manager`, `lid`, `date`, `abstract`" +
-            " FROM `visitLog` WHERE `cid` = #{cid};")
+    @Select("SELECT CONCAT('v', `vid`) `vid`, `cid`, `channel`, `organization`, `mid`, `manager`, `lid`, `date`, `abstract`, `detail`" +
+            " FROM `visitLog` WHERE `cid` = #{cid} AND `mid` = #{mid};")
     @Results({
             @Result(property = "logAbstract", column = "abstract")
     })
-    List<VisitLog> selectVisitLogByCid(@Param("cid") String cid);
+    List<VisitLog> selectVisitLogByCidAndMid(@Param("cid") String cid, @Param("mid") String mid);
 
-    @Select("SELECT CONCAT('v', `vid`) `vid`, `cid`, `channel`, `organization`, `mid`, `manager`, `lid`, `date`, `abstract`" +
+    @Select("SELECT CONCAT('v', `vid`) `vid`, `cid`, `channel`, `organization`, `mid`, `manager`, `lid`, `date`, `abstract`, `detail`" +
+            " FROM `visitLog` WHERE `cid` = #{cid} AND `lid` = #{lid};")
+    @Results({
+            @Result(property = "logAbstract", column = "abstract")
+    })
+    List<VisitLog> selectVisitLogByCidAndLid(@Param("cid") String cid, @Param("lid") String lid);
+
+    @Select("SELECT CONCAT('v', `vid`) `vid`, `cid`, `channel`, `organization`, `mid`, `manager`, `lid`, `date`, `abstract`, `detail`" +
             " FROM `visitLog` WHERE `mid` = #{mid};")
     @Results({
             @Result(property = "logAbstract", column = "abstract")
     })
     List<VisitLog> selectVisitLogByMid(@Param("mid") String mid);
+
+    @Select("SELECT CONCAT('v', `vid`) `vid`, `cid`, `channel`, `organization`, `mid`, `manager`, `lid`, `date`, `abstract`, `detail`" +
+            " FROM `visitLog` WHERE `lid` = #{lid};")
+    @Results({
+            @Result(property = "logAbstract", column = "abstract")
+    })
+    List<VisitLog> selectVisitLogByLid(@Param("lid") String lid);
 
     @Select("SELECT CONCAT('v', `vid`) `vid`, `cid`, `channel`, `organization`, `mid`, `manager`, `lid`, `date`, `abstract`, `detail`" +
             " FROM `visitLog` WHERE `vid` = RIGHT(#{vid}, LENGTH(#{vid}) - 1);")

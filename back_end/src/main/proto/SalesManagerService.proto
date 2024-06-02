@@ -1,0 +1,36 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.myfunds.fds.grpc;
+
+message MidInformationRequest {
+  string mid = 1;
+}
+
+message MidInformationResponse {
+  string midInfo = 1;
+}
+
+message CidInformationRequest {
+  string cid = 1;
+  string mid = 2;
+}
+
+message CidInformationResponse {
+  string cidInfo = 1;
+}
+
+message PostVisitLogRequest {
+  string visitLog = 1;
+}
+
+message PostVisitLogResponse {
+  string res = 1;
+}
+
+service SalesManagerService {
+  rpc getBaseInformation(MidInformationRequest) returns (MidInformationResponse);
+  rpc getChannelList(MidInformationRequest) returns (MidInformationResponse);
+  rpc getManagerVisitLogList(MidInformationRequest) returns (MidInformationResponse);
+  rpc getChannelVisitLogList(CidInformationRequest) returns (CidInformationResponse);
+  rpc postVisitLog(PostVisitLogRequest) returns (PostVisitLogResponse);
+}
